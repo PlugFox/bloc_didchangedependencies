@@ -1,0 +1,41 @@
+targets:
+  $default:
+    sources:
+      - $package$
+      - lib/**
+      - pubspec.yaml
+    builders:
+      json_serializable:
+        enabled: true
+        generate_for:
+          exclude:
+            - test
+          include:
+            - lib/**
+        options:
+          any_map: false
+          checked: false
+          create_factory: true
+          create_to_json: true
+          disallow_unrecognized_keys: false
+          explicit_to_json: false
+          field_rename: none
+          ignore_unannotated: false
+          include_if_null: true
+          nullable: true
+      freezed:
+        enabled: true
+        generate_for:
+          exclude:
+            - test
+          include:
+            - lib/**
+
+builders:
+  freezed:
+    import: "package:freezed/builder.dart"
+    builder_factories: ["freezed"]
+    build_extensions: { ".dart": [".freezed.dart"] }
+    auto_apply: dependents
+    build_to: source
+    runs_before: ["json_serializable|json_serializable"]

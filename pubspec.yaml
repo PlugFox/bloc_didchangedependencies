@@ -1,0 +1,26 @@
+name: bloc_sample
+description: Bloc sample project
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  shared_preferences: ^0.5.12+4
+  flutter_bloc: ^6.1.1
+  freezed_annotation: ^0.12.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^1.10.0
+  json_serializable: ^3.5.0
+  freezed: ^0.12.2
+
+flutter:
+  uses-material-design: true
