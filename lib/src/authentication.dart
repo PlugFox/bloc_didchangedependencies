@@ -2,6 +2,7 @@ import 'package:bloc_sample/src/authentication_bloc.dart';
 import 'package:bloc_sample/src/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 @immutable
 class Authentication extends StatefulWidget {
@@ -48,7 +49,11 @@ class _AuthenticationState extends State<Authentication> {
             notAuthenticated: (_) => _user = null,
           ),
           builder: (context, state) => state.map<Widget>(
-            authenticated: (_) => widget.child,
+            authenticated: (state) => Provider<User>.value(
+              updateShouldNotify: (prev, next) => prev?.id != next?.id,
+              value: state.user,
+              child: widget.child,
+            ),
             notAuthenticated: (_) => const _AuthenticationScreen(),
           ),
         ),

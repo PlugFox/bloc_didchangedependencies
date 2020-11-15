@@ -1,6 +1,7 @@
 import 'package:bloc_sample/src/splash_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 @immutable
@@ -19,7 +20,7 @@ class Splash extends StatelessWidget {
           buildWhen: (prev, next) => (prev is Initial && next is Initialized) || (prev is Initialized && next is Initial),
           builder: (context, state) => state.map(
             initial: (_) => const _SplashScreen(),
-            initialized: (state) => RepositoryProvider<SharedPreferences>.value(
+            initialized: (state) => Provider<SharedPreferences>.value(
               value: state.sharedPreferences,
               child: child,
             ),
