@@ -9,9 +9,11 @@ class Authentication extends StatefulWidget {
   const Authentication({
     @required this.child,
     Key key,
-  })  : assert(child != null, 'Field child in widget Authentication must not be null'),
+  })  : assert(
+          child != null,
+          'Field child in widget Authentication must not be null',
+        ),
         super(key: key);
-  static _AuthenticationState of(BuildContext context) => _AuthenticationScope.of(context)?.state;
 
   @override
   State<Authentication> createState() => _AuthenticationState();
@@ -21,9 +23,6 @@ class _AuthenticationState extends State<Authentication> {
   User _user;
   User get user => _user;
   AuthenticationBLoC _bloc;
-
-  void login(int id) => _bloc.add(LogIn(id));
-  void logout() => _bloc.add(const LogOut());
 
   @override
   void didChangeDependencies() {
@@ -39,8 +38,8 @@ class _AuthenticationState extends State<Authentication> {
   }
 
   @override
-  Widget build(BuildContext context) => _AuthenticationScope(
-        state: this,
+  Widget build(BuildContext context) => BlocProvider.value(
+        value: _bloc,
         child: BlocConsumer<AuthenticationBLoC, AuthenticationState>(
           cubit: _bloc,
           listener: (context, state) => state.map<void>(
@@ -53,26 +52,6 @@ class _AuthenticationState extends State<Authentication> {
           ),
         ),
       );
-}
-
-@immutable
-class _AuthenticationScope extends InheritedWidget {
-  final _AuthenticationState state;
-
-  const _AuthenticationScope({
-    @required Widget child,
-    @required this.state,
-    Key key,
-  })  : assert(child != null, 'Field child in widget _AuthenticationScope must not be null'),
-        assert(state is _AuthenticationState, '_AuthenticationState must not be null'),
-        super(key: key, child: child);
-
-  /// Find _AuthenticationScope in BuildContext
-  static _AuthenticationScope of(BuildContext context) => context.dependOnInheritedWidgetOfExactType<_AuthenticationScope>();
-
-  @override
-  bool updateShouldNotify(_AuthenticationScope oldWidget) =>
-      !identical(state.user, oldWidget.state.user) || state.user != oldWidget.state.user;
 }
 
 @immutable
@@ -91,16 +70,19 @@ class _AuthenticationScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,
               children: [
-                FlatButton(
-                  onPressed: () => Authentication.of(context).login(1),
+                TextButton(
+                  onPressed: () =>
+                      context.read<AuthenticationBLoC>().add(const LogIn(1)),
                   child: const Text('Log in with user #1'),
                 ),
-                FlatButton(
-                  onPressed: () => Authentication.of(context).login(2),
+                TextButton(
+                  onPressed: () =>
+                      context.read<AuthenticationBLoC>().add(const LogIn(2)),
                   child: const Text('Log in with user #2'),
                 ),
-                FlatButton(
-                  onPressed: () => Authentication.of(context).login(3),
+                TextButton(
+                  onPressed: () =>
+                      context.read<AuthenticationBLoC>().add(const LogIn(3)),
                   child: const Text('Log in with user #3'),
                 ),
               ],

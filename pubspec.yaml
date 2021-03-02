@@ -1,7 +1,7 @@
 name: bloc_sample
 description: Bloc sample project
 
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   shared_preferences: ^0.5.12+4
-  flutter_bloc: ^6.1.1
+  flutter_bloc:
   freezed_annotation: ^0.12.0
 
 dev_dependencies:
